@@ -104,6 +104,7 @@ int GgApp::main(int argc, const char* const* argv)
     lightBuffer.loadPosition(reflected.data());
 
     // 鏡像の描画
+   // mirror.loadModelviewMatrix(mv * mm * window.getRotationMatrix());
     materialBuffer.select();
     object->draw();
 

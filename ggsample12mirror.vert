@@ -34,6 +34,7 @@ out vec4 ispec;                                       // 鏡面反射光強度
 
 void main(void)
 {
+ vec4 pv = vec4(pv.x, -pv.y, pv.zw);
   vec4 p = mv * pv;                                   // 視点座標系の頂点の位置
   vec3 v = normalize(p.xyz);                          // 視線ベクトル
   vec3 l = normalize((lpos * p.w - p * lpos.w).xyz);  // 光線ベクトル
