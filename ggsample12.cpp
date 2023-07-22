@@ -107,6 +107,7 @@ int GgApp::main(int argc, const char* const* argv)
     const auto mp{ ggPerspective(0.5f, window.getAspect(), 1.0f, 15.0f) };
 
     // 鏡像用のシェーダの選択
+    //このままでは鏡から物体がはみ出る
     mirror.use(mp, mt * mr * mtm * (mv * mm  * window.getRotationMatrix()), lightBuffer);
     lightBuffer.loadPosition(reflected.data());
 
