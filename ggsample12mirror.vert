@@ -39,9 +39,12 @@ vec3 scaling = vec3(1, -1, 1);
 
 void main(void)
 {
-  vec4 pv = vec4(-mirrorP.x + pv.x,  -mirrorP.y + pv.y, -mirrorP.z + pv.z, pv.w);
-  vec4 pv = vec4(pv.x, -pv.y, pv.zw);
-  vec4 p = mv * pv;                                   // 視点座標系の頂点の位置
+  vec4 pv2 = vec4(-mirrorP.x + pv.x,  -mirrorP.y + pv.y, -mirrorP.z + pv.z, pv.w);
+  vec4 pv3 = vec4(1 * pv2.x, -1 * pv2.y , 1 * pv2.z, pv2.w);
+  vec4 pv4 = vec4(mirrorP.x - pv3.x,  mirrorP.y - pv3.y, mirrorP.z - pv3.z, pv3.w);
+
+  //vec4 pv = vec4(pv.x, -pv.y, pv.zw);
+  vec4 p = mv * pv4;                                   // 視点座標系の頂点の位置
   vec3 v = normalize(p.xyz);                          // 視線ベクトル
   vec3 l = normalize((lpos * p.w - p * lpos.w).xyz);  // 光線ベクトル
   vec3 n = normalize((mn * nv).xyz);                  // 法線ベクトル
