@@ -81,6 +81,13 @@ int GgApp::main(int argc, const char* const* argv)
   // 図形の鏡像変換行列を mr に求める
   const auto mr{ ggScale(1.0f, -1.0f, 1.0f) };
 
+  // 図形を反射面上にある（任意の）点に平行移動する行列
+  const auto mt{ ggTranslate(0.0f, 0.0f, 0.0f) };
+
+
+  // 図形を反射面上にある（任意の）点にマイナスかけたものに平行移動する行列
+  const auto mtm{ ggTranslate(-0.0f, -0.0f, -0.0f) };
+
   // 光源の材質
   const GgSimpleShader::LightBuffer lightBuffer{ light };
 
@@ -89,7 +96,7 @@ int GgApp::main(int argc, const char* const* argv)
   
   // 鏡像のワールド座標系における光源位置
   const auto reflected{ mr * normalpos };
-
+  
   // ウィンドウが開いている間くり返し描画する
   while (window)
   {
@@ -100,11 +107,11 @@ int GgApp::main(int argc, const char* const* argv)
     const auto mp{ ggPerspective(0.5f, window.getAspect(), 1.0f, 15.0f) };
 
     // 鏡像用のシェーダの選択
-    mirror.use(mp, mv * mm * window.getRotationMatrix(), lightBuffer);
+    mirror.use(mp, mv * mm * mt * mr * mtm * window.getRotationMatrix(), lightBuffer);
     lightBuffer.loadPosition(reflected.data());
 
     // 鏡像の描画
-   // mirror.loadModelviewMatrix(mv * mm * window.getRotationMatrix());
+    //mirror.loadModelviewMatrix(mv * mm * mt * mr * mtm* window.getRotationMatrix());
     materialBuffer.select();
     object->draw();
 

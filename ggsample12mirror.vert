@@ -44,7 +44,7 @@ void main(void)
   vec4 pv4 = vec4(mirrorP.x - pv3.x,  mirrorP.y - pv3.y, mirrorP.z - pv3.z, pv3.w);
 
   //vec4 pv = vec4(pv.x, -pv.y, pv.zw);
-  vec4 p = mv * pv4;                                   // 視点座標系の頂点の位置
+  vec4 p = mv * pv;                                   // 視点座標系の頂点の位置
   vec3 v = normalize(p.xyz);                          // 視線ベクトル
   vec3 l = normalize((lpos * p.w - p * lpos.w).xyz);  // 光線ベクトル
   vec3 n = normalize((mn * nv).xyz);                  // 法線ベクトル
@@ -52,8 +52,8 @@ void main(void)
 
   // 陰影計算
   iamb = kamb * lamb;
-  idiff = max(dot(n, l), 0.0) * kdiff * ldiff;
-  ispec = pow(max(dot(n, h), 0.0), kshi) * kspec * lspec;
+  idiff = max(dot(-n, l), 0.0) * kdiff * ldiff;
+  ispec = pow(max(dot(-n, h), 0.0), kshi) * kspec * lspec;
 
   // 頂点のスクリーン座標
   gl_Position = mp * p;
