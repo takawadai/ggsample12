@@ -32,18 +32,8 @@ out vec4 iamb;                                        // 環境光の反射光�
 out vec4 idiff;                                       // 拡散反射光強度
 out vec4 ispec;                                       // 鏡面反射光強度
 
-//反射面のベクトル
-vec3 mirrorN = vec3(0, 1, 0);
-vec3 mirrorP = vec3(0, 0, 0);
-vec3 scaling = vec3(1, -1, 1);
-
 void main(void)
 {
-  vec4 pv2 = vec4(-mirrorP.x + pv.x,  -mirrorP.y + pv.y, -mirrorP.z + pv.z, pv.w);
-  vec4 pv3 = vec4(1 * pv2.x, -1 * pv2.y , 1 * pv2.z, pv2.w);
-  vec4 pv4 = vec4(mirrorP.x - pv3.x,  mirrorP.y - pv3.y, mirrorP.z - pv3.z, pv3.w);
-
-  //vec4 pv = vec4(pv.x, -pv.y, pv.zw);
   vec4 p = mv * pv;                                   // 視点座標系の頂点の位置
   vec3 v = normalize(p.xyz);                          // 視線ベクトル
   vec3 l = normalize((lpos * p.w - p * lpos.w).xyz);  // 光線ベクトル
